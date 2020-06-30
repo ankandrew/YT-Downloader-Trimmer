@@ -34,7 +34,7 @@ class Downloader:
             except youtube_dl.utils.DownloadError as e:
                 print(e)
 
-    def trim(self, start_time, end_time, delete_original=False):
+    def trim(self, start_time, end_time, delete_original=False, out_name=None):
         '''
         start_time and end_time in seconds
         start_time and end_time can be in format: 30, 40 or "10:39", "11:40"
@@ -42,9 +42,11 @@ class Downloader:
         if(isinstance(start_time, str) and isinstance(end_time, str)):
             start_time = self.__str_to_seconds(start_time)
             end_time = self.__str_to_seconds(end_time)
-
-        new_file_name = self.output.parents[0] / \
-            self.__edit_out_filename(self.output.name)
+        if out_name is None:
+            new_file_name = self.output.parents[0] / \
+                self.__edit_out_filename(self.output.name)
+        else:
+            new_file_name = self.output.parents[0] / out_name
         ffmpeg_extract_subclip(
             str(self.output), start_time, end_time, targetname=str(new_file_name))
         if delete_original:
