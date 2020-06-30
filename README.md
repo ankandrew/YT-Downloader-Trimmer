@@ -1,5 +1,7 @@
 # YT-Downloader-Trimmer
 
+Simple program to download videos and trim them
+
 ### Requirements
 
 Install needed requirements:
@@ -9,12 +11,11 @@ pip install -r requirements.txt
 
 ### Usage
 
+The following example download the video as out_filename.mp4 with 480p resolution or else if not aviable. `only_vid=True` specifies video without sound.
 ```python
-
-# Usage ... Downloader(yt_link, out_name)
 yt_d = Downloader(
-    'https://www.youtube.com/watch?v=BtHFQ67J-L8', 'test2.mp4', quality=480, only_vid=True
-    )
+    'yt-video-link', 'out_filename.mp4', quality=480, only_vid=True
+)
 ```
 
 To start downloading a video
