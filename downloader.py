@@ -56,9 +56,9 @@ class Downloader:
         return ''.join(list_split[:-1]) + '.' + list_split[-1]
 
     def __str_to_seconds(self, to_parse):
-        # Exameple input: "10:30" or "10:00" or "10:60"
-        minutes, seconds = to_parse.split(':')
-        return int(minutes) * 60 + int(seconds)
+        # Exameple input: "00:10:30" or "00:10:00" or "00:10:60"
+        hours, minutes, seconds = to_parse.split(':')
+        return int(hours) * 60**2 + int(minutes) * 60 + int(seconds)
 
     def delete_video(self):
         os.remove(self.output)
