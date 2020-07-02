@@ -1,4 +1,3 @@
-# from __future__ import unicode_literals
 from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_subclip
 import youtube_dl
 from pathlib import Path
@@ -6,7 +5,7 @@ import os.path
 
 
 class Downloader:
-    def __init__(self, video_url, output, quality=480, only_vid=True):
+    def __init__(self, video_url, output, quality=480, only_vid=True, only_mp3=False):
         '''
         Params:
         video_url: youtube video url
@@ -18,13 +17,17 @@ class Downloader:
         self.ydl_opts = {
             'noplaylist': True,
             'outtmpl': output,
-            'ext': 'mp4'
             # Aviable if you have ffmpeg installed
             # Otherwise you can download audio + videos w/o specific res
             # 'format': f'bestvideo[height<={quality[0]}]+bestaudio/best[width<={quality[1]}]'
         }
-        if only_vid:
-            self.ydl_opts['format'] = f'bestvideo[height<={quality}]'
+        if not only_mp3:
+            if only_vid:
+                self.ydl_opts['format'] = f'bestvideo[height<={quality}]'
+                self.ydl_opts['ext'] = 'mp4'
+        else:
+            self.ydl_opts['format'] = 'bestaudio'
+            self.ydl_opts['ext'] = 'mp3'
 
     def download(self):
         with youtube_dl.YoutubeDL(self.ydl_opts) as ydl:
